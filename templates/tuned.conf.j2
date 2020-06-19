@@ -1,0 +1,28 @@
+# {{ ansible_managed }}
+[cpu]
+{% for k, v in openio_tuned_cpu.items() | list %}
+{{ k }} = {{ v }}
+{% endfor %}
+
+[disk]
+{% for k, v in openio_tuned_disk.items() | list %}
+{{ k }} = {{ v }}
+{% endfor %}
+
+[scsi_host]
+{% for k, v in openio_tuned_scsi_host.items() | list %}
+{{ k }} = {{ v }}
+{% endfor %}
+
+[vm]
+{% for k, v in openio_tuned_vm.items() | list %}
+{{ k }} = {{ v }}
+{% endfor %}
+
+[sysctl]
+{% for k, v in openio_tuned_sysctl.items() | list %}
+{{ k }} = {{ v }}
+{% endfor %}
+{% if inventory_hostname in openio_tuned_redis_hosts %}
+vm.overcommit_memory = 1
+{% endif %}

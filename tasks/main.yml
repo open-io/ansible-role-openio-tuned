@@ -1,0 +1,61 @@
+---
+- name: "Include {{ ansible_distribution }} variables"
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+  tags:
+    - install
+    - configure
+
+- name: Install packages
+  package:
+    name: "{{ pkg }}"
+    state: "{{ 'latest' if openio_tuned_package_upgrade else 'present' }}"
+  with_items: "{{ tuned_packages }}"
+  loop_control:
+    loop_var: pkg
+  ignore_errors: "{{ ansible_check_mode }}"
+  register: install_packages
+  until: install_packages is success
+  retries: 5
+  delay: 2
+  tags: install
+
+- name: Create profile directory
+  file:
+    path: "{{ openio_tuned_sysconfig_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - install
+    - configure
+
+- name: Copy the tuned profile
+  template:
+    src: tuned.conf.j2
+    dest: "{{ openio_tuned_sysconfig_dir }}/{{ openio_tuned_configname }}"
+    owner: root
+    group: root
+    mode: 0644
+  tags: configure
+
+- name: Get tuned profile.
+  command: /usr/sbin/tuned-adm active
+  register: tuned_active
+  changed_when: false
+  ignore_errors: true
+  when:
+    - ansible_virtualization_type != 'docker'
+  tags: configure
+
+- name: Set tuned tuned profile.
+  command: "/usr/sbin/tuned-adm profile openio"
+  ignore_errors: "{{ ansible_check_mode }}"
+  when:
+    - ansible_virtualization_type != 'docker'
+    - "'tuned' not in tuned_active.stdout"
+  tags: configure
+...

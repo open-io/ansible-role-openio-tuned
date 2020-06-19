@@ -1,0 +1,18 @@
+---
+openio_tuned_sysconfig_dir: /etc/tuned/openio
+openio_tuned_configname: tuned.conf
+
+openio_tuned_package_upgrade: "{{ openio_package_upgrade | d(false) }}"
+
+openio_tuned_redis_hosts: "{{ groups['redis'] | d([]) }}"
+
+openio_tuned_cpu: "{{ cpu_performance }}"
+
+openio_tuned_disk: "{{ disk_rotational }}"
+
+openio_tuned_scsi_host: "{{ scsi_host_performance }}"
+
+openio_tuned_vm: "{{ vm_thp_madvise }}"
+
+openio_tuned_sysctl: "{{ sysctl_standard }}"
+...
