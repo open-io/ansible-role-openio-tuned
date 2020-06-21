@@ -14,5 +14,6 @@ openio_tuned_scsi_host: "{{ scsi_host_performance }}"
 
 openio_tuned_vm: "{{ vm_thp_madvise }}"
 
-openio_tuned_sysctl: "{{ sysctl_standard }}"
+openio_tuned_sysctl: "{{ sysctl_standard_redis if inventory_hostname in openio_tuned_redis_hosts \
+                         else sysctl_standard }}"
 ...

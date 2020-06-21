@@ -56,4 +56,6 @@ sysctl_standard:
   net.ipv4.tcp_keepalive_probes: 6
   net.ipv4.tcp_fin_timeout: 10
 
+sysctl_standard_redis: "{{ sysctl_standard | combine({'vm.overcommit_memory': 1}) }}"
+
 ...

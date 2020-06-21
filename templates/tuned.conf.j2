@@ -23,6 +23,3 @@
 {% for k, v in openio_tuned_sysctl | dictsort(false)  %}
 {{ k }}={{ v }}
 {% endfor %}
-{% if inventory_hostname in openio_tuned_redis_hosts %}
-vm.overcommit_memory=1
-{% endif %}
