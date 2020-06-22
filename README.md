@@ -18,6 +18,7 @@
 | `openio_tuned_cpu` | `"{{ cpu_performance }}"` | dict of settings CPU |
 | `openio_tuned_disk` | `"{{ disk_rotational }}"` | dict of settings DISK |
 | `openio_tuned_package_upgrade` | `"{{ openio_package_upgrade | d(false) }}"` | Set the packages to the latest version (to be set in extra_vars) |
+| `openio_tuned_profile_name` | `openio` | Name of the tuned profile |
 | `openio_tuned_redis_hosts` | `"{{ groups['redis'] | d([]) }}"` | Ansible group of hosts for the redis backend |
 | `openio_tuned_scsi_host` | `"{{ scsi_host_performance }}"` | dict of settings SCSI HOST |
 | `openio_tuned_sysconfig_dir` | `/etc/tuned/openio` | Folder of the profile openio_tuned_configname |
