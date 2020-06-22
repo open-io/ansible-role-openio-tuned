@@ -52,10 +52,12 @@
   tags: configure
 
 - name: Set tuned tuned profile.
-  command: "/usr/sbin/tuned-adm profile openio"
+  command: "/usr/sbin/tuned-adm profile {{ profile }}"
   ignore_errors: "{{ ansible_check_mode }}"
+  vars:
+    profile: "{{ openio_tuned_sysconfig_dir | basename }}"
   when:
     - ansible_virtualization_type != 'docker'
-    - "'tuned' not in tuned_active.stdout"
+    - "{{ profile }} not in tuned_active.stdout"
   tags: configure
 ...
