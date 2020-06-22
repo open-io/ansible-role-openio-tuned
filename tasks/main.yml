@@ -56,6 +56,6 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when:
     - ansible_virtualization_type != 'docker'
-    - "{{ openio_tuned_profile_name }} not in tuned_active.stdout"
+    - "openio_tuned_profile_name not in tuned_active.stdout"
   tags: configure
 ...
