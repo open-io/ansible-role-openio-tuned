@@ -24,7 +24,7 @@
 
 - name: Create profile directory
   file:
-    path: "{{ openio_tuned_sysconfig_dir }}"
+    path: "{{ openio_tuned_sysconfig_dir }}/{{ openio_tuned_profile_name }}"
     state: directory
     owner: root
     group: root
@@ -36,7 +36,7 @@
 - name: Copy the tuned profile
   template:
     src: tuned.conf.j2
-    dest: "{{ openio_tuned_sysconfig_dir }}/{{ openio_tuned_configname }}"
+    dest: "{{ openio_tuned_sysconfig_dir }}/{{ openio_tuned_profile_name }}/{{ openio_tuned_configname }}"
     owner: root
     group: root
     mode: 0644
@@ -52,12 +52,10 @@
   tags: configure
 
 - name: Set tuned tuned profile.
-  command: "/usr/sbin/tuned-adm profile {{ profile }}"
+  command: "/usr/sbin/tuned-adm profile {{ openio_tuned_profile_name }}"
   ignore_errors: "{{ ansible_check_mode }}"
-  vars:
-    profile: "{{ openio_tuned_sysconfig_dir | basename }}"
   when:
     - ansible_virtualization_type != 'docker'
-    - "{{ profile }} not in tuned_active.stdout"
+    - "{{ openio_tuned_profile_name }} not in tuned_active.stdout"
   tags: configure
 ...

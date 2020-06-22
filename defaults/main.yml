@@ -1,6 +1,7 @@
 ---
-openio_tuned_sysconfig_dir: /etc/tuned/openio
+openio_tuned_sysconfig_dir: /etc/tuned
 openio_tuned_configname: tuned.conf
+openio_tuned_profile_name: openio
 
 openio_tuned_package_upgrade: "{{ openio_package_upgrade | d(false) }}"
 
