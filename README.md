@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/open-io/ansible-role-openio-tuned.svg?branch=19.04)](https://travis-ci.org/open-io/ansible-role-openio-tuned)
+[![Build Status](https://travis-ci.org/open-io/ansible-role-openio-tuned.svg?branch=20.04)](https://travis-ci.org/open-io/ansible-role-openio-tuned)
 # Ansible role `tuned`
 
 - install tuned
